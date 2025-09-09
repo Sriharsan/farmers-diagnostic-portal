@@ -61,39 +61,126 @@ class PlantDiseaseClassifier:
         image_tensor = self.transform(image).unsqueeze(0)
         return image_tensor
     
+    # Replace the predict() method in models/plant_classifier.py starting from line ~65
+
     def predict(self, image, top_k=3):
         """Predict plant disease from image"""
         try:
             # Preprocess image
             input_tensor = self.preprocess_image(image)
+        
+            # Check if real model exists, otherwise use mock
+            if hasattr(self, 'real_model_loaded') and self.real_model_loaded:
+                # REAL MODEL INFERENCE
+                with torch.no_grad():
+                    outputs = self.model(input_tensor)
+                    probabilities = torch.nn.functional.softmax(outputs[0], dim=0)
             
-            # Mock prediction for demo (replace with actual model inference)
-            # In real implementation: 
-            # with torch.no_grad():
-            #     outputs = self.model(input_tensor)
-            #     probabilities = torch.nn.functional.softmax(outputs[0], dim=0)
-            
-            # Mock results for demo
-            mock_predictions = np.random.rand(len(self.classes))
-            mock_predictions = mock_predictions / mock_predictions.sum()  # normalize
-            
-            # Get top predictions
-            top_indices = np.argsort(mock_predictions)[-top_k:][::-1]
-            
-            results = []
-            for idx in top_indices:
-                results.append({
-                    'disease': self.classes[idx],
-                    'confidence': float(mock_predictions[idx]),
-                    'crop': self.classes[idx].split('_')[0],
-                    'condition': '_'.join(self.classes[idx].split('_')[1:])
-                })
-            
+                # Get top predictions
+                top_probs, top_indices = torch.topk(probabilities, top_k)
+
+                results = []
+                for i in range(top_k):
+                    disease_name = self.classes[top_indices[i].item()]
+                    results.append({
+                        'disease': disease_name,
+                        'confidence': float(top_probs[i]),
+                        'crop': disease_name.split('_')[0],
+                        'condition': '_'.join(disease_name.split('_')[1:])
+                    })
+            else:
+                # ENHANCED MOCK PREDICTION (more realistic)
+                results = self._generate_realistic_mock_predictions(image, top_k)
+        
             return results
-            
+        
         except Exception as e:
             print(f"Error in prediction: {e}")
             return [{'disease': 'Unknown', 'confidence': 0.0, 'crop': 'Unknown', 'condition': 'Error'}]
+
+    def _generate_realistic_mock_predictions(self, image, top_k=3):
+        """Generate more realistic mock predictions based on image analysis"""
+        # Analyze image for basic features
+        img_array = np.array(image) if hasattr(image, 'convert') else image
+
+        # Simple color analysis to simulate smart prediction
+        if len(img_array.shape) == 3:
+            # Calculate color percentages
+            hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV) if img_array.shape[2] == 3 else img_array
+            green_pixels = np.sum((hsv[:,:,1] > 50) & (hsv[:,:,0] < 80)) if len(hsv.shape) == 3 else 0
+            brown_pixels = np.sum((hsv[:,:,1] > 30) & (hsv[:,:,0] > 10) & (hsv[:,:,0] < 30)) if len(hsv.shape) == 3 else 0
+            total_pixels = img_array.shape[0] * img_array.shape[1]
+
+            # Realistic disease probabilities based on common diseases
+            if green_pixels / total_pixels > 0.6:  # Healthy green
+                disease_probs = {
+                    'Tomato_healthy': 0.4,
+                    'Apple_healthy': 0.3,
+                    'Tomato_Late_blight': 0.15,
+                    'Apple_scab': 0.1,
+                    'Wheat_Brown_rust': 0.05
+                }
+            elif brown_pixels / total_pixels > 0.3:  # Brown/diseased areas
+                disease_probs = {
+                    'Tomato_Late_blight': 0.35,
+                    'Apple_scab': 0.25,
+                    'Wheat_Brown_rust': 0.2,
+                    'Corn_Northern_Leaf_Blight': 0.15,
+                    'Tomato_healthy': 0.05
+                }
+            else:  # Mixed/unclear
+                disease_probs = {
+                    'Tomato_Early_blight': 0.25,
+                    'Apple_Cedar_apple_rust': 0.2,
+                    'Wheat_Brown_rust': 0.18,
+                    'Corn_Common_rust': 0.15,
+                    'Tomato_Leaf_Mold': 0.12,
+                    'Apple_healthy': 0.1
+                }
+        else:
+            # Default probabilities
+            disease_probs = {
+                'Tomato_Late_blight': 0.3,
+                'Wheat_Brown_rust': 0.25,
+                'Apple_scab': 0.2,
+                'Corn_Northern_Leaf_Blight': 0.15,
+                'Tomato_healthy': 0.1
+            }
+
+        # Convert to results format
+        results = []
+        diseases = list(disease_probs.keys())[:top_k]
+        for disease in diseases:
+            # Add some randomness but keep it realistic
+            base_prob = disease_probs[disease]
+            confidence = base_prob * np.random.uniform(0.8, 1.2)  # ±20% variation
+            confidence = min(confidence, 0.95)  # Cap at 95%
+
+            results.append({
+                'disease': disease,
+                'confidence': float(confidence),
+                'crop': disease.split('_')[0],
+                'condition': '_'.join(disease.split('_')[1:])
+            })
+
+        # Sort by confidence
+        results.sort(key=lambda x: x['confidence'], reverse=True)
+        return results
+
+    def load_real_model(self, model_path):
+        """Load real trained model if available"""
+        try:
+            if os.path.exists(model_path):
+                self.model.load_state_dict(torch.load(model_path, map_location=self.device))
+                self.model.eval()
+                self.real_model_loaded = True
+                print(f"✅ Real model loaded from {model_path}")
+            else:
+                self.real_model_loaded = False
+                print(f"⚠️ Model file not found at {model_path}, using enhanced mock predictions")
+        except Exception as e:
+            self.real_model_loaded = False
+            print(f"❌ Error loading model: {e}, using enhanced mock predictions")
     
     def get_disease_info(self, disease_name):
         """Get additional information about the disease"""

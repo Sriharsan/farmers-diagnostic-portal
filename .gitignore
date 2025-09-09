@@ -67,3 +67,6 @@ Thumbs.db
 *.tmp
 *.temp
 temp/
+
+# Ignore environment variables file
+.env
