@@ -70,3 +70,18 @@ temp/
 
 # Ignore environment variables file
 .env
+
+
+# --- ML datasets & artifacts (added) ---
+data/datasets/
+assets/
+
+# Training outputs
+models/*.png
+models/*.jpg
+models/*.jpeg
+
+# Any remaining large data
+*.zip
+*.tar
+*.tar.gz
