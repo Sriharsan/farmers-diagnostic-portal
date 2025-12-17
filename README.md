@@ -84,6 +84,7 @@ farmers-disease-portal/
 └── setup scripts/                  # Setup and automation scripts
     ├── setup_datasets.py           # Dataset download and setup
     └── complete_project_setup.py   # Full project initialization
+---
 
 📊 Datasets
 The project uses real agricultural disease datasets:
@@ -93,6 +94,8 @@ Plant Pathology 2020: Competition dataset for apple disease detection
 Custom Livestock Dataset: Curated images for cattle, poultry diseases
 
 ⚠️ Important: Due to size constraints, datasets are NOT included in this repository. Use the setup scripts to download them, or the application will work with the existing pre-trained models.
+
+---
 
 🧠 AI Models
 Plant Disease Model
@@ -110,7 +113,7 @@ Input Size: 224x224x3
 Classes: 5 livestock conditions
 Accuracy: ~85.7%
 Inference Time: <2 seconds
-
+---
 🎨 Features Breakdown
 1. Disease Diagnosis
 
@@ -149,7 +152,7 @@ Models are loaded from models/pretrained/. To use custom models:
 Train using models/model_trainer.py
 Place .pth files in models/pretrained/
 Update model metadata JSON files
-
+---
 📱 Mobile Usage
 The application is fully responsive and works on:
 
@@ -159,3 +162,4 @@ The application is fully responsive and works on:
 ✅ Works on 4G/5G networks
 
 ⭐ If this project helped you, please consider giving it a star!
+
