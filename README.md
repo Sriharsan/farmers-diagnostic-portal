@@ -1,47 +1,91 @@
-# 🌾 AI-Powered Farmers Disease Diagnostic Portal
+# 🌾 AI‑Powered Farmers Disease Diagnostic Portal
+
+An intelligent web application that empowers farmers with **AI‑driven disease diagnosis** for crops and livestock. This platform combines **computer vision, machine learning, weather intelligence, and community knowledge** to provide instant disease identification, treatment recommendations, and real‑time analytics.
+
+---
 
 ## 📌 Project Overview
 
-An intelligent web application that empowers farmers with **AI-driven disease diagnosis** for crops and livestock. This comprehensive platform combines **computer vision, machine learning, weather intelligence, and community knowledge** to provide instant disease identification, treatment recommendations, and real-time analytics.
+Farmers often lack immediate access to agricultural experts when crops or livestock show disease symptoms. This project bridges that gap using lightweight, production‑ready AI models optimized for real‑world deployment. Farmers can upload images and receive **fast, accurate, and context‑aware disease insights** directly on web or mobile devices.
 
 ---
 
 ## 🎯 Key Features
 
-- 🔬 **AI Disease Recognition**  
-  Upload images for instant diagnosis using deep learning models  
-  - MobileNetV2 for plant diseases  
-  - EfficientNet-B0 for livestock diseases  
+### 🔬 AI Disease Recognition
 
-- 🌤️ **Weather Integration**  
-  Real-time weather data correlated with disease risk assessment  
+* Upload crop or livestock images for instant diagnosis
+* Deep‑learning powered predictions
+* Models used:
 
-- 💊 **Treatment Database**  
-  Scientific treatment protocols and prevention strategies for 50+ diseases  
+  * **MobileNetV2** – Plant disease detection
+  * **EfficientNet‑B0** – Livestock disease detection
 
-- 👥 **Community Knowledge Sharing**  
-  Farmers can share and discover effective traditional remedies  
+### 🌤️ Weather Integration
 
-- 📊 **Real-time Analytics**  
-  Interactive dashboards tracking disease outbreaks and trends  
+* Real‑time weather data via OpenWeather API
+* Weather‑based disease risk correlation
+* Improves prediction reliability and alerts
 
-- 📱 **Mobile Optimized**  
-  Fully responsive design with PWA capabilities for offline use  
+### 💊 Treatment Database
 
-- 🗺️ **Location-based Insights**  
-  Geographic disease tracking and risk alerts  
+* Scientific treatment protocols
+* Preventive care recommendations
+* Coverage for **50+ agricultural diseases**
+
+### 👥 Community Knowledge Sharing
+
+* Farmers share traditional and field‑tested remedies
+* Rate and validate remedy effectiveness
+* Expert verification workflow
+
+### 📊 Real‑time Analytics
+
+* Interactive dashboards
+* Disease outbreak tracking
+* Trend and severity analysis
+
+### 📱 Mobile Optimized (PWA)
+
+* Fully responsive UI
+* Progressive Web App (PWA) support
+* Works offline in low‑connectivity areas
+
+### 🗺️ Location‑based Insights
+
+* Geographic disease tracking
+* Region‑specific risk alerts
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Frontend:** Streamlit (Python web framework)  
-- **ML Framework:** PyTorch 2.7.0  
-- **Computer Vision:** OpenCV, Pillow  
-- **Data Visualization:** Plotly, Matplotlib, Seaborn  
-- **Data Processing:** Pandas, NumPy  
-- **API Integration:** OpenWeather API  
-- **Models:** MobileNetV2 (Plant), EfficientNet-B0 (Livestock)  
+### Frontend
+
+* **Streamlit** (Python web framework)
+
+### Machine Learning
+
+* **PyTorch 2.7.0**
+* **MobileNetV2** (Plant diseases)
+* **EfficientNet‑B0** (Livestock diseases)
+
+### Computer Vision
+
+* OpenCV
+* Pillow
+
+### Data & Analytics
+
+* Pandas
+* NumPy
+* Plotly
+* Matplotlib
+* Seaborn
+
+### APIs
+
+* OpenWeather API
 
 ---
 
@@ -52,114 +96,137 @@ farmers-disease-portal/
 ├── app.py                          # Main Streamlit application
 ├── requirements.txt                # Python dependencies
 ├── .env                            # Environment variables (API keys)
-├── .gitignore                      # Git ignore file
+├── .gitignore                      # Git ignore rules
 │
 ├── models/                         # ML models and training scripts
 │   ├── pretrained/                # Pre-trained model files (.pth, .pkl)
-│   └── model_trainer.py            # Model training script
+│   └── model_trainer.py            # Model training pipeline
 │
 ├── data/                           # Data storage
-│   ├── datasets/                  # Training datasets (not in git due to size)
+│   ├── datasets/                  # Training datasets (excluded from git)
 │   │   ├── plantvillage/           # Plant disease images (50K+ images)
 │   │   └── livestock/              # Livestock disease images
-│   ├── disease_submissions.json    # User submissions database
-│   ├── community_remedies.json     # Community remedies database
-│   └── analytics_data.json         # Analytics and metrics
+│   ├── disease_submissions.json    # User submissions
+│   ├── community_remedies.json     # Community remedies
+│   └── analytics_data.json         # Analytics metrics
 │
 ├── knowledge_base/                 # Rule-based reasoning system
 │   ├── __init__.py
-│   └── disease_rules.py            # Disease diagnosis rules and treatments
+│   └── disease_rules.py            # Diagnosis rules & treatments
 │
 ├── utils/                          # Utility modules
 │   ├── __init__.py
-│   ├── database.py                 # JSON database management
-│   ├── analytics.py                # Analytics and visualization
-│   ├── image_processor.py          # Image preprocessing utilities
-│   └── augment_blackleg.py         # Data augmentation script
+│   ├── database.py                 # JSON database handler
+│   ├── analytics.py                # Analytics & visualization
+│   ├── image_processor.py          # Image preprocessing
+│   └── augment_blackleg.py         # Data augmentation
 │
 ├── assets/                         # Static assets
-│   ├── logo.png                    # Application logo
-│   └── sample_images/              # Sample disease images for testing
+│   ├── logo.png
+│   └── sample_images/              # Sample images
 │
-└── setup scripts/                  # Setup and automation scripts
-    ├── setup_datasets.py           # Dataset download and setup
-    └── complete_project_setup.py   # Full project initialization
----
-
-📊 Datasets
-The project uses real agricultural disease datasets:
-
-PlantVillage Dataset: 50,000+ images covering 38 plant disease classes
-Plant Pathology 2020: Competition dataset for apple disease detection
-Custom Livestock Dataset: Curated images for cattle, poultry diseases
-
-⚠️ Important: Due to size constraints, datasets are NOT included in this repository. Use the setup scripts to download them, or the application will work with the existing pre-trained models.
+└── setup_scripts/                  # Automation scripts
+    ├── setup_datasets.py           # Dataset setup
+    └── complete_project_setup.py   # Full initialization
+```
 
 ---
 
-🧠 AI Models
-Plant Disease Model
+## 📊 Datasets
 
-Architecture: MobileNetV2 (lightweight, mobile-optimized)
-Input Size: 224x224x3
-Classes: 38 plant diseases
-Accuracy: ~89.2%
-Inference Time: <2 seconds
+This project uses real agricultural disease datasets:
 
-Livestock Disease Model
+* **PlantVillage Dataset** – 50,000+ images across 38 plant disease classes
+* **Plant Pathology 2020** – Apple disease detection dataset
+* **Custom Livestock Dataset** – Curated cattle and poultry disease images
 
-Architecture: EfficientNet-B0
-Input Size: 224x224x3
-Classes: 5 livestock conditions
-Accuracy: ~85.7%
-Inference Time: <2 seconds
+> ⚠️ **Important:** Datasets are **not included** due to size constraints. Use setup scripts or rely on pre‑trained models.
+
 ---
-🎨 Features Breakdown
-1. Disease Diagnosis
 
-Upload crop/animal images
-AI-powered disease identification
-Confidence scoring (85-95% typical)
-Weather-context enhanced predictions
-Multi-disease differential diagnosis
+## 🧠 AI Models
 
-2. Treatment Recommendations
+### 🌱 Plant Disease Model
 
-Scientific treatment protocols
-Prevention strategies
-Severity assessment
-Follow-up guidance
-Community-validated remedies
+* Architecture: **MobileNetV2**
+* Input Size: `224 × 224 × 3`
+* Classes: 38 plant diseases
+* Accuracy: ~**89.2%**
+* Inference Time: < **2 seconds**
 
-3. Analytics Dashboard
+### 🐄 Livestock Disease Model
 
-Real-time disease tracking
-Geographic outbreak visualization
-Severity distribution charts
-Temporal trend analysis
-Risk assessment alerts
+* Architecture: **EfficientNet‑B0**
+* Input Size: `224 × 224 × 3`
+* Classes: 5 livestock conditions
+* Accuracy: ~**85.7%**
+* Inference Time: < **2 seconds**
 
-4. Community Features
-
-Share successful treatments
-Rate remedy effectiveness
-Location-based insights
-Expert verification system
-
-Model Configuration
-Models are loaded from models/pretrained/. To use custom models:
-
-Train using models/model_trainer.py
-Place .pth files in models/pretrained/
-Update model metadata JSON files
 ---
-📱 Mobile Usage
-The application is fully responsive and works on:
 
-✅ Desktop browsers (Chrome, Firefox, Safari, Edge)
-✅ Mobile browsers (iOS Safari, Android Chrome)
-✅ Progressive Web App (PWA) - installable on mobile
-✅ Works on 4G/5G networks
+## 🎨 Feature Breakdown
 
-⭐ If this project helped you, please consider giving it a star!
+### 1️⃣ Disease Diagnosis
 
+* Image upload for crops & animals
+* AI‑powered classification
+* Confidence scoring (85–95% typical)
+* Weather‑enhanced predictions
+* Differential diagnosis support
+
+### 2️⃣ Treatment Recommendations
+
+* Scientific treatment protocols
+* Preventive strategies
+* Severity assessment
+* Follow‑up guidance
+* Community‑validated remedies
+
+### 3️⃣ Analytics Dashboard
+
+* Real‑time disease tracking
+* Geographic outbreak maps
+* Severity distribution charts
+* Temporal trend analysis
+* Risk alerts
+
+### 4️⃣ Community Features
+
+* Share successful treatments
+* Rate remedies
+* Location‑based insights
+* Expert verification system
+
+---
+
+## ⚙️ Model Configuration
+
+* Pre‑trained models are loaded from `models/pretrained/`
+* To use custom models:
+
+  1. Train using `models/model_trainer.py`
+  2. Save `.pth` files in `models/pretrained/`
+  3. Update model metadata JSON files
+
+---
+
+## 📱 Mobile & Device Support
+
+The application works seamlessly on:
+
+* ✅ Desktop browsers (Chrome, Firefox, Edge, Safari)
+* ✅ Mobile browsers (Android & iOS)
+* ✅ Progressive Web App (PWA)
+* ✅ 4G / 5G and low‑bandwidth networks
+
+---
+
+## ⭐ Support the Project
+
+If this project helped you or inspired your work, please consider giving it a ⭐ on GitHub.
+
+---
+
+## 📜 License
+
+This project is released under the **MIT License**.
